@@ -4,13 +4,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.iftm.tspi.pbackorm.hello_world.domain.Contato;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("/contatos")
@@ -47,5 +53,17 @@ public class HelloWordController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    private List<Contato> contatos = new ArrayList<>();
+
+    @PostMapping
+    public ResponseEntity<Contato> novo(@RequestBody Contato contato) {
+        
+        contatos.add(contato);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(contato);
+    }
+    
     
 }
